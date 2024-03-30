@@ -2,12 +2,12 @@
   "name": "sample-ts-project",
   "version": "1.0.0",
   "description": "Just a basic setup for a typescript program",
-  "main": "index.js",
+  "main": "main.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "build": "rimraf ./build && tsc",
-    "start:local": "npm run build && node build/index.js"
+    "start:local": "npm run build && node build/main.js"
   },
   "keywords": [],
   "author": "Andrei Yauseyenka",
