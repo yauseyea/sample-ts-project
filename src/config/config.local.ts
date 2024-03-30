@@ -1,7 +1,7 @@
 import { Config } from '../interfaces/config.interface';
 
-const localonfig: Config = {
+const localConfig: Config = {
     configName: 'Local',
 };
 
-export = localonfig;
+export = localConfig;
