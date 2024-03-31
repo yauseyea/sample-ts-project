@@ -1,3 +1,6 @@
 node_modules
-dist
+build
 .vscode
+coverage
+ressource
+jest.config.js

@@ -4,20 +4,27 @@
   "description": "Just a basic setup for a typescript program",
   "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest --coverage",
     "lint": "eslint . --ext .ts",
     "build": "rimraf ./build && tsc",
     "start:local": "npm run build && node build/main.js",
     "start:dev": "npm run build && node build/main.js",
-    "start:prod": "npm run build && node build/main.js"
+    "start:prod": "npm run build && node build/main.js",
+    "docker-build": "docker-compose build",
+    "docker-stop": "docker-compose down",
+    "docker-dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d",
+    "docker-prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d"
   },
   "keywords": [],
   "author": "Andrei Yauseyenka",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.2",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.0",
     "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   }

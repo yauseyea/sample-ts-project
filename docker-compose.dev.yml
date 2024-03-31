@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  sample-project-docker:
+    env_file :
+      - dev.env
+    build:
+      target: development
+    container_name: dev
+    expose:
+      - '40001'
+    ports:
+      - '40001:40001'
+    command: npm run start:dev

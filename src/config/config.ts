@@ -6,16 +6,15 @@ import prodConfig from './config.prod';
 
 let config: Config; 
 
-if (process.env.ENVIROMENT === 'local') {
+if (process.env.ENVIREMENT === 'local') {
     config = localConfig;
-} else if (process.env.ENVIROMENT === 'dev') {
+} else if (process.env.ENVIREMENT === 'dev') {
     config = devConfig;
-} else if (process.env.ENVIROMENT === 'prod') {
+} else if (process.env.ENVIREMENT === 'prod') {
     config = prodConfig;
 } else {
     config = localConfig;
-    console.error(`No config found, using ${config.configName} instaed`);
-    throw new Error('No config loaded');
+    console.debug(`No config found, using ${config.configName} instaed`);
 }
 console.debug(`Loading Config: ${config.configName}`);
 

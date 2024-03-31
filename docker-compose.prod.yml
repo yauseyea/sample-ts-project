@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  sample-project-docker:
+    env_file :
+      - prod.env
+    build:
+      target: production
+    container_name: prod
+    expose:
+      - '40002'
+    ports:
+      - '40002:40002'
+    command: npm run start:prod

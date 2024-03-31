@@ -17,7 +17,7 @@
                 "${workspaceFolder}/build/**/*.js"
             ],
             "env": {
-                "ENVIROMENT": "local"
+                "ENVIREMENT": "local"
             }
         }
     ]
