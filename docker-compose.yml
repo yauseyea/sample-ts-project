@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  sample-project-docker:
+    env_file :
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/home/node/app/src
+      - ./nodemon.json:/home/node/app/nodemon.json
+    container_name: sample-project-docker
+    expose:
+      - '4000'
+    ports:
+      - '4000:4000'
+    command: npm run start:local
