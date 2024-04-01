@@ -1,12 +1,1 @@
-version: '3.7'
-
-services:
-  sample-project-docker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base
-    volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: sample-project-docker
+version: '3.8'
