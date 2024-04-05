@@ -3,4 +3,5 @@ build
 .vscode
 coverage
 ressource
-jest.config.js
+logs
+src/test/*

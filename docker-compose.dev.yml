@@ -1,19 +1,21 @@
 version: '3.8'
 
 services:
-  sample-project-docker-dev:
-    env_file :
-      - dev.env
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: development
-    container_name: sample-project-docker-dev
-    volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
-    expose:
-      - '40001'
-    ports:
-      - '40001:40001'
-    command: npm run start:dev
+   sample-project-docker-dev:
+      env_file:
+         - dev.env
+      build:
+         context: .
+         dockerfile: Dockerfile
+         target: development
+      expose:
+         - '40001'
+      ports:
+         - '40001:40001'
+      volumes:
+         - ./src:/home/node/app/src
+         - ./nodemon.json:/home/node/app/nodemon.json
+      container_name: sample-project-docker-dev
+      networks:
+         - sample-project-net
+      command: npm run start:dev

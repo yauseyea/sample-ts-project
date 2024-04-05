@@ -1,19 +1,21 @@
 version: '3.8'
 
 services:
-  sample-project-docker-prod:
-    env_file :
-      - prod.env
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    expose:
-      - '40002'
-    ports:
-      - '40002:40002'
-    volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: sample-project-docker-prod
-    command: npm run start:prod
+   sample-project-docker-prod:
+      env_file:
+         - prod.env
+      build:
+         context: .
+         dockerfile: Dockerfile
+         target: production
+      expose:
+         - '40002'
+      ports:
+         - '40002:40002'
+      volumes:
+         - ./src:/home/node/app/src
+         - ./nodemon.json:/home/node/app/nodemon.json
+      container_name: sample-project-docker-prod
+      networks:
+         - sample-project-net
+      command: npm run start:prod
