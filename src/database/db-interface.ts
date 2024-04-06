@@ -3,10 +3,7 @@ import { Config } from '../interfaces/config.interface';
 import Logger from 'bunyan';
 
 export default class DbConnection {
-   private static createDBconnection(
-      config: Config,
-      log: Logger
-   ): Promise<Connection> {
+   static createDBconnection(config: Config, log: Logger): Promise<Connection> {
       return new Promise((resolve, reject) => {
          try {
             const client: Connection = mysql.createConnection({
@@ -31,11 +28,19 @@ export default class DbConnection {
       });
    }
 
-   private static async executeQuery(
+   /**
+    * Executes a MySQL query
+    * @param client MySQL Connection
+    * @param query MySQL query string
+    * @param log Logger for logging
+    * @param debugOn optional, if set, than the response of the query will be printed on debug level
+    * @returns MySQL response
+    */
+   static async executeQuery(
       client: Connection,
       query: string,
       log: Logger,
-      debugOn = true
+      debugOn = false
    ): Promise<QueryFunction> {
       return new Promise((resolve, reject) => {
          client.query(query, (err, rows) => {
@@ -88,39 +93,19 @@ export default class DbConnection {
    }
 
    /**
-    * Creates a connection to MySQL.
-    * If successfull, starts a MySQL query in a transaction.
-    * If the transaction has an error, everything is rolled back.
-    * @param config Config of the application
-    * @param query MySQL querry as a string
+    * Executes a function in a MySQL transaction
+    * If an error accures, the transaction is rolled back.
+    * @param client MySQL Connection
     * @param log Logger for logging
-    * @param debugOn optional, if set, than the response of the query will be printed on debug level
-    * @returns MySQL response
+    * @param callback function that should be executed in an transaction
     */
-   static async executeQueryInTransaction(
-      config: Config,
-      query: string,
+   static async executeFunctionInTransaction(
+      client: Connection,
       log: Logger,
-      debugOn = false
-   ): Promise<QueryFunction> {
-      const client: Connection = await DbConnection.createDBconnection(
-         config,
-         log
-      );
+      callback: Function
+   ): Promise<void> {
       await DbConnection.startTransaction(client, log);
-      return new Promise((resolve, reject) => {
-         DbConnection.executeQuery(client, query, log, debugOn)
-            .then(async (resp) => {
-               await DbConnection.endTransaction(client, log);
-               client.end();
-               resolve(resp);
-            })
-            .catch(async (err) => {
-               await DbConnection.rollbackTransaction(client, log);
-               await DbConnection.endTransaction(client, log);
-               client.end();
-               reject(err);
-            });
-      });
+      callback().catch(() => DbConnection.rollbackTransaction(client, log));
+      await DbConnection.endTransaction(client, log);
    }
 }
